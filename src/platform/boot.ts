@@ -14,13 +14,25 @@ export class BootMonitor {
   assertHealthy() { if (this.failure) throw this.failure }
 
   async run(start: () => Promise<void>) {
+    const work = start()
+    // The watchdog may win while start() is still pending. Swallow that later
+    // rejection so it does not surface as an unhandled promise.
+    work.catch(() => undefined)
+    let timer = 0
+    const watchdog = new Promise<never>((_, reject) => {
+      timer = window.setTimeout(() => reject(new Error(`启动超时（${this.currentStage}）`)), 40_000)
+    })
     try {
-      await start()
+      await Promise.race([work, watchdog])
+      window.clearTimeout(timer)
       this.assertHealthy()
       this.currentStage = 'Running'
       this.ui.overlay.classList.add('ready')
       this.ui.overlay.setAttribute('aria-hidden', 'true')
-    } catch (error) { this.fail(error) }
+    } catch (error) {
+      window.clearTimeout(timer)
+      this.fail(error)
+    }
   }
 
   fail(reason: unknown) {

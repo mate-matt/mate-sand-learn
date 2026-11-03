@@ -256,6 +256,13 @@ export class SandSound {
         if (Number.isFinite(duration) && duration > 0) this.waveDuration = duration
         resolve()
       }
+      // No src: load() fires neither loadedmetadata nor error, so awaiting it
+      // never settles. Boot waits on this promise while the status still says
+      // "Rendering the first surface".
+      if (!this.wave.getAttribute('src') && this.wave.src === '') {
+        resolve()
+        return
+      }
       if (this.wave.readyState >= HTMLMediaElement.HAVE_METADATA) {
         finalize()
         return
