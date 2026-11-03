@@ -1,0 +1,21 @@
+Mate Sand Learn (mate-sand-learn) is a modified version of Sandboard
+(https://github.com/scottstts/Sandboard) by Scott Sun, licensed under GPL-3.0-only.
+
+Upstream: https://sand.scottsun.io
+Also adapted via Sand BG (https://sand-bg.pages.dev) and Mate Sand Glass
+(https://mate-sand-glass.pages.dev).
+
+This derivative keeps the Sandboard WebGPU height-bed solver, airborne grains,
+and lighting. Experiment 1 paints vocabulary polaroid cards under the sand and
+shapes the packed height with gentle dunes and wind ripples. The sand simulation
+and rendering engine are Sandboard’s. There is no Sandboard badge in the page
+chrome; attribution lives here, in LICENSE, and in the README.
+
+Content: @mate_mattt / MateMatt.
+
+Fonts (SIL Open Font License):
+- Nunito by Vernon Adams, Cyreal — public/fonts/OFL-nunito.txt
+- Noto Sans SC by Google — public/fonts/OFL-noto.txt
+
+public/leaf-reflection.png ships with the Mate Sand Glass core and is not
+drawn in this experiment.
