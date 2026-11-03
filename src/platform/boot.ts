@@ -31,8 +31,14 @@ export class BootMonitor {
     this.ui.overlay.classList.remove('ready')
     this.ui.overlay.classList.add('failed')
     this.ui.overlay.removeAttribute('aria-hidden')
-    this.ui.title.textContent = '需要 WebGPU 才能显示真实沙子'
-    this.ui.status.textContent = '「沙子 · 单词」使用与 mate-sand-glass / Sandboard 相同的 WebGPU 沙床引擎。请用较新的 Chrome、Edge 或 Safari（需硬件加速 WebGPU）。无软件回退。'
+    const webgpuMissing = /WebGPU is unavailable|No hardware WebGPU adapter|hardware WebGPU adapter is required|could not create a WebGPU canvas context/i.test(error.message)
+    if (webgpuMissing) {
+      this.ui.title.textContent = '需要 WebGPU 才能显示真实沙子'
+      this.ui.status.textContent = '「沙子 · 单词」使用与 mate-sand-glass / Sandboard 相同的 WebGPU 沙床引擎。请用较新的 Chrome、Edge 或 Safari（需硬件加速 WebGPU）。无软件回退。'
+    } else {
+      this.ui.title.textContent = '沙子没有铺好'
+      this.ui.status.textContent = error.message
+    }
     this.ui.diagnostics.hidden = false
     this.ui.diagnostics.textContent = [
       `Stage: ${this.currentStage}`, `Error: ${error.message}`,

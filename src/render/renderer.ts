@@ -5,7 +5,7 @@ import { idleWaveResetState } from '../reset/effect'
 import type { SandSolver } from '../simulation/solver'
 import { AirborneShadow } from './airborne-shadow'
 import { SandCamera } from './camera'
-import { CoconutShadow } from './coconut-shadow'
+import { ShadowSlot } from './shadow-slot'
 import { BedLighting } from './lighting'
 import { GLINT_FORMAT, HDR_SCENE_FORMAT, SandPostProcess } from './postprocess'
 import { surfaceShader } from './shaders'
@@ -18,7 +18,7 @@ export class SandRenderer {
   readonly camera = new SandCamera()
   private readonly uniform: GPUBuffer
   private readonly lighting: BedLighting
-  private readonly shadow: CoconutShadow
+  private readonly shadow: ShadowSlot
   private readonly airborneShadow: AirborneShadow
   private readonly post: SandPostProcess
   private readonly indices: GPUBuffer
@@ -44,7 +44,7 @@ export class SandRenderer {
     this.glass = new GlassLayer(device)
     this.uniform = device.createBuffer({ label: 'Surface view', size: this.data.byteLength, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST })
     this.lighting = new BedLighting(device, solver, this.uniform)
-    this.shadow = new CoconutShadow(device, mobileGrainFiltering)
+    this.shadow = new ShadowSlot(device)
     this.airborneShadow = new AirborneShadow(device, solver)
     this.post = new SandPostProcess(device, format, format)
     const resolution = solver.resolution
@@ -112,7 +112,7 @@ export class SandRenderer {
     this.camera.aspect = width / height
     this.depth = this.device.createTexture({ label: 'Surface depth', size: [width, height], format: 'depth24plus', usage: GPUTextureUsage.RENDER_ATTACHMENT })
     this.post.resize(width, height)
-    this.shadow.resize(width, height, (x, y) => this.camera.screenToBed(x, y, width, height))
+    this.shadow.resize(width, height)
     this.glass.resize(width, height)
     // Underlay texture recreated — refresh bind groups that reference its view
     if (this.pipeline) {

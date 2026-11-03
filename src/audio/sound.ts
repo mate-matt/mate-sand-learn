@@ -48,8 +48,10 @@ function requestPlaybackAudioSession() {
 }
 
 export class SandSound {
-  private readonly ambient = new Audio('/scene_assets/beach.mp3')
-  private readonly wave = new Audio('/scene_assets/wave.mp3')
+  // Beach ambience and the reset-wave file are not shipped with this lab.
+  // Procedural scrape noise still runs. Wave timing stays on the built-in duration.
+  private readonly ambient = new Audio()
+  private readonly wave = new Audio()
   private readonly gestures = new Map<number, GestureTrack>()
   private readonly unlockController = new AbortController()
   private context: AudioContext | undefined
