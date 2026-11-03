@@ -6,6 +6,8 @@ Wipe the sand to read a word. One half of the bed is packed thicker, the other t
 
 **Live:** https://mate-matt.github.io/mate-sand-learn/
 
+The Actions workflow builds `dist` and uploads a Pages artifact. The site URL starts serving after a repo admin sets Pages to **GitHub Actions** (Settings → Pages). See [DEPLOY.md](./DEPLOY.md).
+
 **GPLv3 derivative** of [Sandboard](https://github.com/scottstts/Sandboard) by [Scott Sun](https://sand.scottsun.io). Grain, lighting, airborne grains, and scrape are the Sandboard / [mate-sand-glass](https://mate-sand-glass.pages.dev) engine. This page does not put a Sandboard badge in the corner; attribution is this file, [LICENSE](./LICENSE), and [NOTICE](./NOTICE).
 
 ## Run

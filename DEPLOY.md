@@ -15,6 +15,8 @@ Push to `main` runs `.github/workflows/pages.yml`:
 
 Pages source is GitHub Actions, not a `gh-pages` branch.
 
+The first deploy returns 404 until a repo admin opens **Settings → Pages → Build and deployment → Source: GitHub Actions**. The automation token used here cannot change that setting. After it is on, re-run the "Deploy GitHub Pages" workflow.
+
 ## Local preview
 
 ```bash
